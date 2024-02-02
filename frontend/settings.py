@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-47ll4$p6m49xyr*a534z*%r!xjksh2^6n7(@!-jy%w-2#x74+c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["chik-filesharewebapp.azurewebsites.net"]
 
 
 # Application definition
