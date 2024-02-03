@@ -7,5 +7,5 @@ variable "default_location" {
 resource "random_password" "password" {
   length = 30
   special = true
-  override_special = "!#$%&*()-_=+[]{}<>:?"
+  override_special = "!#$%&*()_=+^<>:?"
 }
