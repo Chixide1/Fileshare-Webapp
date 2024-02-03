@@ -14,6 +14,8 @@ provider "azurerm" {
   features {}
 }
 
+data "azurerm_client_config" "current" {}
+
 resource "azurerm_resource_group" "rg" {
   name     = "fileshare-webapp"
   location = var.default_location
@@ -40,6 +42,19 @@ resource "azurerm_key_vault" "kv" {
   sku_name = "standard"
   tenant_id = "380c0008-0574-46d2-8938-093fa0b5de50"
   soft_delete_retention_days = 7
+
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.object_id
+
+    secret_permissions = [
+      "Set",
+      "Get",
+      "Delete",
+      "Purge",
+      "Recover"
+    ]
+  }
 }
 
 resource "azuread_application" "fileshareapp-name" {
@@ -54,6 +69,12 @@ resource "azuread_service_principal_password" "client_secret" {
   service_principal_id = azuread_service_principal.fileshareapp-sp.object_id
 }
 
+resource "azurerm_key_vault_secret" "kv-sakey" {
+  name         = "fileshare-sa-key"
+  value        = azurerm_storage_account.sa.primary_connection_string
+  key_vault_id = azurerm_key_vault.kv.id
+}
+
 resource "azurerm_service_plan" "app-sp" {
   name                = "Fileshare-webapp-plan"
   resource_group_name = azurerm_resource_group.rg.name
@@ -62,11 +83,38 @@ resource "azurerm_service_plan" "app-sp" {
   sku_name            = "F1"
 }
 
-# resource "azurerm_linux_web_app" "linux-wa" {
-#   name                = "fileshare-webapp"
-#   resource_group_name = azurerm_resource_group.rg.name
-#   location            = var.default_location
-#   service_plan_id     = azurerm_service_plan.app-sp.id
+resource "azurerm_linux_web_app" "linux-wa" {
+  name                = "chik-fileshare-webapp"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.default_location
+  service_plan_id     = azurerm_service_plan.app-sp.id
+  https_only = true
 
-#   site_config {}
-# }
+  site_config {
+    always_on = false
+    application_stack {
+      python_version = 3.9
+    }
+  }
+
+  auth_settings {
+    enabled = false
+  }
+}
+
+resource "azurerm_key_vault_access_policy" "enable_fileshare_webapp_access" {
+  key_vault_id = azurerm_key_vault.kv.id
+  tenant_id = data.azurerm_client_config.current.tenant_id
+  object_id = azuread_service_principal.fileshareapp-sp.object_id
+
+  secret_permissions = [
+    "Get"
+  ]
+}
+
+resource "azurerm_app_service_source_control" "example" {
+  app_id   = azurerm_linux_web_app.linux-wa.id
+  repo_url = "https://github.com/Chixide1/Fileshare-Webapp"
+  branch   = "master"
+  use_manual_integration = true
+}
