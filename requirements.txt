@@ -1,1 +1,3 @@
 Django
+azure-identity
+azure-keyvault

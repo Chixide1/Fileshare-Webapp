@@ -21,6 +21,18 @@ resource "azurerm_resource_group" "rg" {
   location = var.default_location
 }
 
+resource "azuread_application" "fileshareapp-name" {
+  display_name = "Fileshare-Webapp"
+}
+
+resource "azuread_service_principal" "fileshareapp-sp" {
+  client_id = azuread_application.fileshareapp-name.client_id
+}
+
+resource "azuread_service_principal_password" "client_secret" {
+  service_principal_id = azuread_service_principal.fileshareapp-sp.object_id
+}
+
 resource "azurerm_storage_account" "sa" {
   name                     = "chikfilesharewebappsa"
   resource_group_name      = azurerm_resource_group.rg.name
@@ -55,18 +67,15 @@ resource "azurerm_key_vault" "kv" {
       "Recover"
     ]
   }
-}
 
-resource "azuread_application" "fileshareapp-name" {
-  display_name = "Fileshare-Webapp"
-}
-
-resource "azuread_service_principal" "fileshareapp-sp" {
-  client_id = azuread_application.fileshareapp-name.client_id
-}
-
-resource "azuread_service_principal_password" "client_secret" {
-  service_principal_id = azuread_service_principal.fileshareapp-sp.object_id
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = azuread_service_principal.fileshareapp-sp.object_id
+    
+    secret_permissions = [
+      "Get"
+    ]
+  }
 }
 
 resource "azurerm_key_vault_secret" "kv-sakey" {
@@ -97,24 +106,18 @@ resource "azurerm_linux_web_app" "linux-wa" {
     }
   }
 
-  auth_settings {
-    enabled = false
+  app_settings = {
+    AZURE_CLIENT_ID = azuread_service_principal.fileshareapp-sp.client_id
+    AZURE_CLIENT_SECRET = azuread_service_principal_password.client_secret.value
+    AZURE_TENANT_ID = data.azurerm_client_config.current.tenant_id
+    KV_URI = azurerm_key_vault.kv.vault_uri
+    DJANGO_SECRET_KEY = random_password.password.result
   }
-}
-
-resource "azurerm_key_vault_access_policy" "enable_fileshare_webapp_access" {
-  key_vault_id = azurerm_key_vault.kv.id
-  tenant_id = data.azurerm_client_config.current.tenant_id
-  object_id = azuread_service_principal.fileshareapp-sp.object_id
-
-  secret_permissions = [
-    "Get"
-  ]
 }
 
 resource "azurerm_app_service_source_control" "example" {
   app_id   = azurerm_linux_web_app.linux-wa.id
   repo_url = "https://github.com/Chixide1/Fileshare-Webapp"
-  branch   = "master"
+  branch   = "main"
   use_manual_integration = true
 }
