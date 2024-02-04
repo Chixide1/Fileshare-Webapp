@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% load static %}
+
+{% block title %}Upload{% endblock title %}
+
+{% block content %}
+<div class="box1"> 
+  <h4>UPLOAD FILES</h4>
+</div>
+<div class="box2">
+  <img src="{% static 'images/cloud-upload.svg' %}" width="50" height="50">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" name="submit" value="Submit"/>
+  </form>
+</div>
+<div class="messagelist">
+  {% for message in messages %} {% if message.tags == 'success' %}
+  <div class="alert alert-success" role="alert">{{ message|safe }}</div>
+  {% else %}
+  <div class="alert alert-danger" role="alert">{{ message|safe }}</div>
+  {% endif %} {% endfor %}
+</div>
+{% endblock content %}

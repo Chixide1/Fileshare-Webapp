@@ -1,3 +1,6 @@
 Django
 azure-identity
 azure-keyvault
+azure-storage-blob
+azure-core
+azure-common

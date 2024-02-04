@@ -80,7 +80,7 @@ resource "azurerm_key_vault" "kv" {
 
 resource "azurerm_key_vault_secret" "kv-sakey" {
   name         = "fileshare-sa-key"
-  value        = azurerm_storage_account.sa.primary_connection_string
+  value        = azurerm_storage_account.sa.primary_access_key
   key_vault_id = azurerm_key_vault.kv.id
 }
 
@@ -112,6 +112,7 @@ resource "azurerm_linux_web_app" "linux-wa" {
     AZURE_TENANT_ID = data.azurerm_client_config.current.tenant_id
     KV_URI = azurerm_key_vault.kv.vault_uri
     DJANGO_SECRET_KEY = random_password.password.result
+    ACCOUNT_URL = azurerm_storage_account.sa.primary_blob_endpoint
   }
 }
 
