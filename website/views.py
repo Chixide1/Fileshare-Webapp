@@ -37,14 +37,17 @@ def download_file(request, file_id):
         response = HttpResponse(blob_content.readall(), content_type=file_type)
         response['Content-Disposition'] = f'attachment; filename={file_name}'
         messages.success(request, f"{file_name} was successfully downloaded")
+        response = redirect("/manage/")
         return response
     return Http404
 
 
 def delete_file(request,file_id):
     file = models.File.objects.get(pk=file_id)
+    file_name = file.file_name
     delete_blob(file.file_url)
     file.deleted = 1
     file.save()
+    messages.success(request, f"{file_name} was successfully downloaded")
     response = redirect("/manage/")
     return response
