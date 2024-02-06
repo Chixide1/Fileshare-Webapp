@@ -1,15 +1,34 @@
 body {
+    all:initial;
     background-color: #1F2937;
     display: flex;
+    flex-direction: column;
     align-items: center; /* Center vertically */
-    justify-content: center; /* Center horizontally */
-    height: 100vh;
+    justify-content: start; /* Center horizontally */
+    height: 100dvh;
     color: #BFDBFE;
     margin: auto;
 }
-  
-.container {
-    /* background: #374151; */
+
+.messages{
+    margin: 0%;
+    padding: 0%;
+}
+
+.alert-success { 
+    display: flex;
+    margin: 0%;
+    color: #eeeeee;
+    width: 100dvw;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    height: 39px;
+    align-items: center;
+    text-indent: 60px;
+    background: #006B1B url(../images/icon-yes.svg) 40px 12px no-repeat;
+}
+
+.maincontainer {
     background-color: #374151;
     width: 25rem;
     height: 30rem;
@@ -19,6 +38,7 @@ body {
     flex-direction: column;
     justify-content:start;
     align-items: center;
+    margin-top: 50px;
 }
 
 .box1{
@@ -43,20 +63,23 @@ body {
     border-color: #6886C5;
 }
 
-.input-button{
+.fileform{
     border-radius: 2.5px;
     border: 2px;
-    width: 50%;
+    width: 75%;
     color: whitesmoke;
-
 }
 
-.box3{
-    width: 22rem;
-    height: 12rem;
+.formsubmit{
+    transition: all 0.2 ease;
 }
 
-.box3 p{
-    text-align: left;
-    font-size: small;
+.formsubmit:active{
+    transform: scale(0.96);
 }
+/* 
+hr {
+    width: 85%;
+    margin-top: 10px;
+    border-color: #BFDBFE;
+} */

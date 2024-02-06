@@ -8,7 +8,7 @@ from azure.keyvault.secrets import SecretClient
 from azure.storage.blob import BlobClient
 from . import models
 
-def create_blob_client(file_name):
+def get_storage_key():
     load_dotenv()
 
     kvuri = os.environ["KV_URI"]
@@ -17,12 +17,16 @@ def create_blob_client(file_name):
 
     retrieved_secret = client.get_secret("fileshare-sa-key")
     storage_key = retrieved_secret.value
-    
+    return storage_key
+
+def create_blob_client(file_name):    
+    sa = get_storage_key()
+
     return BlobClient(
     account_url=os.environ["ACCOUNT_URL"],
     container_name=('upload'),
     blob_name=file_name,
-    credential=storage_key
+    credential=sa
     )
 
 def save_file_url_to_db(file_url):
@@ -43,7 +47,14 @@ def upload_file_to_blob(file):
 
     return file_object
 
-# def handle_uploaded_file(f,n):
-#     with open(n, "wb+") as destination:
-#         for chunk in f.chunks():
-#             destination.write(chunk)
+def download_blob(file):
+    blob_client = create_blob_client(file)
+    if not blob_client.exists():
+        return
+    blob_content = blob_client.download_blob()
+    return blob_content
+
+def delete_blob(bloburl):
+    sa = get_storage_key()
+    blobclient = BlobClient.from_blob_url(bloburl,sa)
+    blobclient.delete_blob()

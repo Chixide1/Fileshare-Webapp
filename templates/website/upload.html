@@ -1,0 +1,19 @@
+{% extends "base.html" %} {% load static %}
+
+{% block title %}Upload{% endblock title %}
+
+{% block content %}
+<div class="maincontainer">
+  <div class="box1"> 
+    <h4>UPLOAD FILES</h4>
+  </div>
+  <div class="box2">
+    <img src="{% static 'images/cloud-upload.svg' %}" width="50" height="50">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class = >{{form}}</div>
+      <button type="submit" value="Submit" class="formsubmit">Submit</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}

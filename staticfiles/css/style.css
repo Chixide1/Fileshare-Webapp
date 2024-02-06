@@ -1,13 +1,22 @@
 body {
     background-color: #1F2937;
     display: flex;
+    flex-direction: column;
     align-items: center; /* Center vertically */
     justify-content: center; /* Center horizontally */
-    height: 100vh;
+    height: 100dvh;
     color: #BFDBFE;
     margin: auto;
 }
-  
+
+.nav-bar { /* New selector for better styling control */
+    background-color: #374151; /* Inherit from container for consistency */
+    padding: 1rem; /* Add padding for visual clarity */
+    text-align: center;
+    width: 100dvw;
+    background: rgb(12, 169, 12);
+}
+
 .container {
     /* background: #374151; */
     background-color: #374151;
@@ -43,12 +52,11 @@ body {
     border-color: #6886C5;
 }
 
-.input-button{
+.fileform{
     border-radius: 2.5px;
     border: 2px;
-    width: 50%;
+    width: 75%;
     color: whitesmoke;
-
 }
 
 .box3{
@@ -59,4 +67,12 @@ body {
 .box3 p{
     text-align: left;
     font-size: small;
+}
+
+.alert-success{
+    all: initial;
+}
+
+.message-alerts{
+    margin-top: 0%;
 }
