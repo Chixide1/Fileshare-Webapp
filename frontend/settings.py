@@ -139,7 +139,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # Allows POST requests
-CSRF_TRUSTED_ORIGINS = ['https://chik-fileshare-webapp.azurewebsites.net/','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://chik-fileshare-webapp.azurewebsites.net','https://*.127.0.0.1']
 
 
 MESSAGE_TAGS = {
