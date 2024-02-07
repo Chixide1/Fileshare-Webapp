@@ -37,7 +37,6 @@ def download_file(request, file_id):
         response = HttpResponse(blob_content.readall(), content_type=file_type)
         response['Content-Disposition'] = f'attachment; filename={file_name}'
         messages.success(request, f"{file_name} was successfully downloaded")
-        response = redirect("/manage/")
         return response
     return Http404
 
