@@ -22,7 +22,7 @@ def index(request):
     return render(request, "website/upload.html", {"form":form})
 
 def manage(request):
-    files = models.File.objects.filter(deleted=0)
+    files = models.File.objects.all()
     context = {"files": files}
     return render(request, "website/manage.html", context=context)
 
@@ -46,8 +46,7 @@ def delete_file(request,file_id):
     file = models.File.objects.get(pk=file_id)
     file_name = file.file_name
     delete_blob(file.file_url)
-    file.deleted = 1
-    file.save()
-    messages.success(request, f"{file_name} was successfully downloaded")
+    file.delete()
+    messages.success(request, f"{file_name} was successfully deleted")
     response = redirect("/manage/")
     return response
