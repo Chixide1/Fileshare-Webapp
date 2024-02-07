@@ -3,17 +3,17 @@
 {% block title %}Upload{% endblock title %}
 
 {% block content %}
-<div class="maincontainer">
-  <div class="box1"> 
-    <h4>UPLOAD FILES</h4>
-  </div>
-  <div class="box2">
-    <img src="{% static 'images/cloud-upload.svg' %}" width="50" height="50">
-    <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class = >{{form}}</div>
-      <button type="submit" value="Submit" class="formsubmit">Submit</button>
-    </form>
+<div class="container w-75">
+  <div class="card text-center mt-4">
+    <div class="card-body" style="padding: 0%;">
+      <div class="card-header">UPLOAD FILES</div>
+      <img src="{% static 'images/cloud-upload.svg' %}" width="50" height="50" class="card-image-top">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container w-50">{{form}}</div>
+        <button type="submit" value="Submit" class="btn btn-dark mt-1 mb-1">Submit</button>
+      </form>
+    </div>
   </div>
 </div>
 {% endblock content %}

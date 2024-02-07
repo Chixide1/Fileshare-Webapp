@@ -1,14 +1,14 @@
 {% extends "base.html" %} {% load static %}
 
 {% block content %}
-<div class="maincontainer">
+<div class="container">
     <div class="box3">
         <p>Uploaded files</p>
     </div>
     <ul class="card-body">
     {% for file in files %}
-        <li>
-            <p>Filename: <span  class="fs-5 text-secondary" >{{file.file_name}}</span></p>
+        <li class="file-option">
+            <p class="file-display">{{file.file_name}}</p>
             <a href="{% url "download_file" file_id=file.id %}" class="btn btn-primary" >Download</a>  
             <a href="{% url "delete_file" file_id=file.id %}" class="btn btn-warning" >Delete</a>
         </li>

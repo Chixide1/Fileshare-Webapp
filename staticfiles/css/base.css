@@ -10,11 +10,6 @@ body {
     margin: auto;
 }
 
-.messages{
-    margin: 0%;
-    padding: 0%;
-}
-
 .alert-success { 
     display: flex;
     margin: 0%;
@@ -65,13 +60,7 @@ body {
 
 .box3 {
     text-align: start;
-}
-
-.fileform{
-    border-radius: 2.5px;
-    border: 2px;
-    width: 75%;
-    color: whitesmoke;
+    width: 85%;
 }
 
 .formsubmit{
@@ -83,6 +72,13 @@ body {
 }
 
 .card-body {
-    width: 100%;
+    width: 85%;
     padding: 0%;
+    text-align: start;
+    list-style-type: none;
+    color: whitesmoke;
+}
+
+a.btn{
+    color: whitesmoke;
 }
