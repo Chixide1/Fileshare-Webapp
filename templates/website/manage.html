@@ -7,7 +7,7 @@
             <p>Uploaded Files</p>
         </div>
         <ul class="list-group">
-        {% if file %}
+        {% if files %}
         {% for file in files %}
             <li class="list-group-item" style="border-radius: 0;">
                 <p class="file-display">{{file.file_name}}</p>
