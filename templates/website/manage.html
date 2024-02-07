@@ -4,11 +4,12 @@
 <div class="container w-75">
     <div class="card mt-4">
         <div class="card-header">
-            <p>Uploaded files</p>
+            <p>Uploaded Files</p>
         </div>
         <ul class="list-group">
+        {% if file %}
         {% for file in files %}
-            <li class="list-group-item">
+            <li class="list-group-item" style="border-radius: 0;">
                 <p class="file-display">{{file.file_name}}</p>
                 <a href="{% url "download_file" file_id=file.id %}" class="btn btn-outline-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-download" viewBox="0 2 16 16">
                     <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"></path>
@@ -19,6 +20,9 @@
                   </svg>Delete</a>
             </li>
         {% endfor %}
+        {% else %}
+            <li class="list-group-item" style="border-radius: 0;">No Files Uploaded</li>
+        {% endif %}
         </ul>
     </div>
 </div>
