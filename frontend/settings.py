@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'website.apps.WebsiteConfig'
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'website.apps.WebsiteConfig',
+    'users.apps.UsersConfig'
 ]
 
 MIDDLEWARE = [
@@ -149,3 +152,9 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+CRISPY_ALLOWED_TEMPLATE_PACK = "bootstrap5"
+
+LOGIN_REDIRECT_URL = "/upload_files/"
+LOGOUT_REDIRECT_URL = "/"

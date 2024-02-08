@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% load crispy_forms_tags %}
+
+{% block title %}Login{% endblock title %}
+
+{% block nav %}
+<nav class="navbar bg-dark navbar-dark">
+    <div class="container">
+        <a href="#" class="navbar-brand">Fileshare Webapp</a>
+</nav> 
+{% endblock nav %}
+
+{% block content %}
+<div class="container w-75 mt-4">
+    <form method="POST" class="from-group">
+        {% csrf_token %}
+        {{form | crispy}}
+        <button class="btn btn-success">Login</button>
+        <p>Register <a href={% url "create_user" %}>Here</a></p>
+    </form>
+</div>
+{% endblock content %}

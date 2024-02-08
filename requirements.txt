@@ -5,3 +5,5 @@ azure-storage-blob
 azure-core
 azure-common
 python-dotenv
+Django-crispy-forms
+crispy-bootstrap5

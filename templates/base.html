@@ -22,6 +22,7 @@
 
     <body>
         <header>
+            {% block nav %}
             <nav class="navbar bg-dark navbar-dark">
                 <div class="container">
                     <a href="#" class="navbar-brand">Fileshare Webapp</a>
@@ -31,17 +32,22 @@
                     <div class="collapse navbar-collapse" id="navmenu">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item"><a href="{% url "manage_files" %}" class="nav-link">Files</a></li>
-                            <li class="nav-item"><a href="{% url "index" %}" class="nav-link">Upload</a></li>
+                            <li class="nav-item"><a href="{% url "upload_files" %}" class="nav-link">Upload</a></li>
+                            <form id="logout-form" method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link">Logout</button>
+                              </form>
                         </ul>
                     </div>
                 </div>
             </nav> 
+            {% endblock nav %}
         </header>
         <main>
             {% block content %}{% endblock content %}
         </main>
         <footer class="w-75 position-absolute bottom-0 start-50 translate-middle-x">
-            {% include "message.html" %}
+            {% include "messages.html" %}
         </footer>
         <!-- Bootstrap JavaScript Libraries -->
         <script
