@@ -61,12 +61,16 @@ def download_files(request, file_id):
         url = file.file_url
         blob_name = url.split("/")[-1]
         blob_content = download_blob(blob_name)
+
         if blob_content:
             response = HttpResponse(blob_content.readall(), content_type=file_type)
             response['Content-Disposition'] = f'attachment; filename={file_name}'
             messages.success(request, f"{file_name} was successfully downloaded")
             return response
-        return Http404
+        else:
+            messages.error(request, f"{file_name} has expired and been deleted as it's been 2 days since it was uplaoded!")
+            file.delete()
+            return redirect("/manage_files/")
     else:
         return HttpResponseForbidden()
 
@@ -75,9 +79,11 @@ def delete_files(request,file_id):
     file = models.File.objects.get(pk=file_id)
     if file.user == request.user:
         file_name = file.file_name
-        delete_blob(file.file_url)
+        url = file.file_url
+        blob_name = url.split("/")[-1]
+        msg = delete_blob(blob_name)
         file.delete()
-        messages.success(request, f"{file_name} was successfully deleted")
+        messages.info(request,file_name + msg)
         return redirect("/manage_files/")
     else:
         return HttpResponseForbidden()

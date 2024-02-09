@@ -3,7 +3,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.0.2"
+      version = "~> 3.91.0"
     }
   }
 
@@ -121,4 +121,22 @@ resource "azurerm_app_service_source_control" "example" {
   repo_url = "https://github.com/Chixide1/Fileshare-Webapp"
   branch   = "main"
   use_manual_integration = true
+}
+
+resource "azurerm_storage_management_policy" "purgepol" {
+  storage_account_id = azurerm_storage_account.sa.id
+
+  rule {
+    name    = "uploadpurge"
+    enabled = true
+    filters {
+      blob_types   = ["blockBlob"]
+      prefix_match = ["upload/"]
+    }
+    actions {
+        base_blob {
+          delete_after_days_since_creation_greater_than = 2
+        }
+      }
+    }
 }

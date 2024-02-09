@@ -54,10 +54,14 @@ def download_blob(file):
     blob_content = blob_client.download_blob()
     return blob_content
 
-def delete_blob(bloburl):
-    sa = get_storage_key()
-    blobclient = BlobClient.from_blob_url(bloburl,sa)
-    blobclient.delete_blob()
+def delete_blob(file):
+    blob_client = create_blob_client(file)
+    if not blob_client.exists():
+        msg = f" has already expired and been deleted as it's been 2 days since it was uploaded!"
+        return msg
+    blob_client.delete_blob()
+    msg = f" was successfully deleted"
+    return msg
 
 def bytesto(bytes, to, bsize=1024):
   """convert bytes to megabytes, etc and round to nearest integer.
