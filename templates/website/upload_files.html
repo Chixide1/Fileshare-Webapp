@@ -13,7 +13,16 @@
         <div class="container w-50">{{form}}</div>
         <button type="submit" value="Submit" class="btn btn-dark mt-1 mb-1">Submit</button>
       </form>
+      <button type="button" class="btn btn-secondary position-absolute bottom-0 end-0"
+        data-bs-toggle="tooltip" data-bs-placement="bottom"
+        data-bs-title="The storage quota assigned to you and how much of it you have currently used">
+          {{mb_used}} MB / 100 MB Used
+      </button>
     </div>
   </div>
 </div>
+<script>
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
 {% endblock content %}

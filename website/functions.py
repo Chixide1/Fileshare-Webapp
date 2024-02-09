@@ -12,7 +12,7 @@ def get_storage_key():
     load_dotenv()
 
     kvuri = os.environ["KV_URI"]
-    creds = DefaultAzureCredential()
+    creds = DefaultAzureCredential(AZURE_CLIENT_ID=os.environ["AZURE_CLIENT_ID"])
     client = SecretClient(vault_url=kvuri, credential=creds)
 
     retrieved_secret = client.get_secret("fileshare-sa-key")
@@ -58,3 +58,19 @@ def delete_blob(bloburl):
     sa = get_storage_key()
     blobclient = BlobClient.from_blob_url(bloburl,sa)
     blobclient.delete_blob()
+
+def bytesto(bytes, to, bsize=1024):
+  """convert bytes to megabytes, etc and round to nearest integer.
+      sample code:
+          print('mb= ' + str(bytesto(314575262000000, 'm')))
+      sample output: 
+          mb= 300002348
+  """
+
+  a = {'k' : 1, 'm': 2, 'g' : 3, 't' : 4, 'p' : 5, 'e' : 6 }
+  r = float(bytes)
+  for i in range(a[to]):
+      r = r / bsize
+  
+  r = round(r)
+  return(int(r))

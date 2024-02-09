@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404, HttpResponseForbidden
-from .functions import upload_file_to_blob, download_blob, delete_blob
+from .functions import upload_file_to_blob, download_blob, delete_blob, bytesto
 from pathlib import Path
 from django.contrib import messages
 from . import models 
@@ -15,19 +15,36 @@ def index(request):
 
 @login_required
 def upload_files(request):
+    files = models.File.objects.filter(user=request.user)
+    print(files)
+    
+    b_used = 0
+    for file in files:
+        b = file.file_size
+        b_used += int(b)
+    print(b_used)
+    mb_used = bytesto(b_used,'m')
+    print(mb_used)
+
     if request.method == 'POST' and request.FILES['file']:
         file = request.FILES['file']
+        storage_quota = file.size + b_used
+        storage_quota = bytesto(storage_quota,'m')
+        
+        if storage_quota > 100:
+            messages.error(request, f"Can't upload {file.name} as it will exceed your storage quota!")
+            pass
         ext = Path(file.name).suffix
         new_file = upload_file_to_blob(file) 
         new_file.file_name = file.name
         new_file.file_extention = ext
         new_file.user = request.user
+        new_file.file_size = file.size
         new_file.save()
-
         messages.success(request, f"{file.name} was successfully uploaded")
-
+    
     form = UploadFileForm()
-    return render(request, "website/upload_files.html", {"form":form})
+    return render(request, "website/upload_files.html", {"form":form,"mb_used":mb_used})
 
 @login_required
 def manage_files(request):

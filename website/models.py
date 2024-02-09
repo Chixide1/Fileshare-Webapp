@@ -8,4 +8,5 @@ class File(models.Model):
     file_url = models.URLField(null=True)
     file_name = models.CharField(max_length=200, null=True)
     file_extention = models.CharField(max_length=200, null=True)
+    file_size = models.IntegerField(null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,default=None,null=True)
