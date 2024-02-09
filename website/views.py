@@ -33,15 +33,15 @@ def upload_files(request):
         
         if storage_quota > 100:
             messages.error(request, f"Can't upload {file.name} as it will exceed your storage quota!")
-            pass
-        ext = Path(file.name).suffix
-        new_file = upload_file_to_blob(file) 
-        new_file.file_name = file.name
-        new_file.file_extention = ext
-        new_file.user = request.user
-        new_file.file_size = file.size
-        new_file.save()
-        messages.success(request, f"{file.name} was successfully uploaded")
+        else:
+            ext = Path(file.name).suffix
+            new_file = upload_file_to_blob(file) 
+            new_file.file_name = file.name
+            new_file.file_extention = ext
+            new_file.user = request.user
+            new_file.file_size = file.size
+            new_file.save()
+            messages.success(request, f"{file.name} was successfully uploaded")
     
     form = UploadFileForm()
     return render(request, "website/upload_files.html", {"form":form,"mb_used":mb_used})
@@ -78,7 +78,6 @@ def delete_files(request,file_id):
         delete_blob(file.file_url)
         file.delete()
         messages.success(request, f"{file_name} was successfully deleted")
-        response = redirect("/manage/")
-        return response
+        return redirect("/manage_files/")
     else:
         return HttpResponseForbidden()

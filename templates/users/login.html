@@ -15,7 +15,7 @@
         {% csrf_token %}
         {{form | crispy}}
         <button class="btn btn-success">Login</button>
-        <p>Register <a href={% url "create_user" %}>Here</a></p>
+        <a href={% url "create_user" %} class="btn btn-success">Register</a>
     </form>
 </div>
 {% endblock content %}
