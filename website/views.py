@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404, HttpResponseForbidden
-from .functions import upload_file_to_blob, download_blob, delete_blob, bytesto
+from .functions import upload_file_to_blob, download_blob, delete_blob, bytesto, generate_sas
 from pathlib import Path
 from django.contrib import messages
 from . import models 
@@ -16,7 +16,6 @@ def index(request):
 @login_required
 def upload_files(request):
     files = models.File.objects.filter(user=request.user)
-    print(files)
     
     b_used = 0
     for file in files:
@@ -55,6 +54,7 @@ def manage_files(request):
 @login_required
 def download_files(request, file_id):
     file = models.File.objects.get(pk=file_id)
+    
     if file.user == request.user:
         file_name = file.file_name
         file_type, _ = mimetypes.guess_type(file_name)
@@ -68,7 +68,7 @@ def download_files(request, file_id):
             messages.success(request, f"{file_name} was successfully downloaded")
             return response
         else:
-            messages.error(request, f"{file_name} has expired and been deleted as it's been 2 days since it was uplaoded!")
+            messages.error(request, f"{file_name} has expired and been deleted as it's been 2 days since it was uploaded!")
             file.delete()
             return redirect("/manage_files/")
     else:
@@ -77,13 +77,34 @@ def download_files(request, file_id):
 @login_required
 def delete_files(request,file_id):
     file = models.File.objects.get(pk=file_id)
+    
     if file.user == request.user:
         file_name = file.file_name
         url = file.file_url
         blob_name = url.split("/")[-1]
         msg = delete_blob(blob_name)
         file.delete()
-        messages.info(request,file_name + msg)
+        messages.success(request,file_name + msg)
         return redirect("/manage_files/")
+    else:
+        return HttpResponseForbidden()
+    
+@login_required   
+def create_sas(request,file_id):
+    file = models.File.objects.get(pk=file_id)
+
+    if file.user == request.user:
+        file_name = file.file_name
+        url = file.file_url
+        blob_name = url.split("/")[-1]
+        sas = generate_sas(blob_name)
+
+        if sas:
+            messages.info(request,f"Here's the share link, it expires in 1 day: {sas}")
+            return redirect("/manage_files/")
+        else:
+            messages.error(request, f"{file_name} has expired and been deleted as it's been 2 days since it was uploaded!")
+            file.delete()
+            return redirect("/manage_files/")
     else:
         return HttpResponseForbidden()
