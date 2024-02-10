@@ -101,7 +101,7 @@ resource "azurerm_linux_web_app" "linux-wa" {
 
   site_config {
     always_on = false
-    # app_command_line = "python manage.py migrate"
+
     application_stack {
       python_version = 3.9
     }
