@@ -148,15 +148,6 @@ resource "azurerm_log_analytics_workspace" "log_workspace" {
   resource_group_name = azurerm_resource_group.rg.name
 }
 
-# data "azurerm_storage_container" "storeproperties" {
-#   name = azurerm_storage_container.container.name
-#   storage_account_name = azurerm_storage_account.sa.name
-# }
-
-# data "azurerm_monitor_diagnostic_categories" "example" {
-#   resource_id = azurerm_storage_account.sa.primary_blob_endpoint
-# }
-
 resource "azurerm_monitor_diagnostic_setting" "storage_logs" {
   name               = "storage_logs"
   target_resource_id = "${azurerm_storage_account.sa.id}/blobServices/default/"
