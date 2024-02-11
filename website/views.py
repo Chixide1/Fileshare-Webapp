@@ -7,13 +7,12 @@ from . import models
 from .forms import UploadFileForm
 import mimetypes
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
 # Create your views here.
 
 def index(request):
     return redirect("/login/")
 
-@login_required
+@login_required(login_url="/login/")
 def upload_files(request):
     files = models.File.objects.filter(user=request.user)
     
@@ -45,13 +44,13 @@ def upload_files(request):
     form = UploadFileForm()
     return render(request, "website/upload_files.html", {"form":form,"mb_used":mb_used})
 
-@login_required
+@login_required(login_url="/login/")
 def manage_files(request):
     files = models.File.objects.filter(user=request.user)
     context = {"files": files}
     return render(request, "website/manage_files.html", context=context)
 
-@login_required
+@login_required(login_url="/login/")
 def download_files(request, file_id):
     file = models.File.objects.get(pk=file_id)
     
@@ -74,7 +73,7 @@ def download_files(request, file_id):
     else:
         return HttpResponseForbidden()
 
-@login_required
+@login_required(login_url="/login/")
 def delete_files(request,file_id):
     file = models.File.objects.get(pk=file_id)
     
@@ -89,7 +88,7 @@ def delete_files(request,file_id):
     else:
         return HttpResponseForbidden()
     
-@login_required   
+@login_required(login_url="/login/")   
 def create_sas(request,file_id):
     file = models.File.objects.get(pk=file_id)
 
