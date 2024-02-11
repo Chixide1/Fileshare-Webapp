@@ -50,8 +50,10 @@
         <main>
             {% block content %}{% endblock content %}
         </main>
-        <footer class="w-75 position-absolute bottom-0 start-50 translate-middle-x">
+        <footer>
+            <div class="w-75 position-absolute bottom-0 start-50 translate-middle-x">
             {% include "messages.html" %}
+            </div>
         </footer>
     </body>
 </html>
