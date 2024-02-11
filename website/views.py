@@ -56,14 +56,15 @@ def download_files(request, file_id):
     
     if file.user == request.user:
         file_name = file.file_name
+        file_name = file_name.replace(",","")
         file_type, _ = mimetypes.guess_type(file_name)
         url = file.file_url
         blob_name = url.split("/")[-1]
         blob_content = download_blob(blob_name)
 
         if blob_content:
-            response = HttpResponse(blob_content.readall(), content_type=file_type)
-            response['Content-Disposition'] = f'attachment; filename={file_name}'
+            response = HttpResponse(blob_content.readall(),content_type=file_type)
+            response['Content-Disposition'] = f"attachment; filename={file_name}"
             messages.success(request, f"{file_name} was successfully downloaded")
             return response
         else:
