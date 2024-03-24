@@ -8,4 +8,4 @@ python-dotenv
 Django-crispy-forms
 crispy-bootstrap5
 whitenoise
-psycopg2
+psycopg
