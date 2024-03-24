@@ -9,3 +9,9 @@ resource "random_password" "password" {
   special = true
   override_special = "!#$%&*()_=+^<>:?"
 }
+
+resource "random_password" "db_pass" {
+  length = 10
+  special = true
+  override_special = "!#$%&*()_=+^<>:?"
+}

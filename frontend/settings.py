@@ -82,12 +82,19 @@ WSGI_APPLICATION = 'frontend.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite',
-    }
-}
 
+    'default': {
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'main',
+        'USER': 'chik',
+        'PASSWORD': os.environ["DB_PASS"],
+        'HOST': 'ck-django-db.postgres.database.azure.com',
+        'PORT': '5432',
+
+    }
+
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
