@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     'sass_processor',
     'django.contrib.staticfiles',
+    "django_htmx",
     'crispy_forms',
     'crispy_bootstrap5',
     'website.apps.WebsiteConfig',
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "django_htmx.middleware.HtmxMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

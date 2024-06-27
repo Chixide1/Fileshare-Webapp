@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% load crispy_forms_tags %}
+
+{% block title %}Register{% endblock title %}
+
+{% block content %}
+<form method="POST" class="form-group text-dark">
+    {% csrf_token %}
+    {{form | crispy}}
+    <button hx-post="{% url "register" %}" hx-target="#login__content" class="btn btn-dark">Register</button>
+</form>
+{% endblock content %}

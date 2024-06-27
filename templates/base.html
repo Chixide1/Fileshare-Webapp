@@ -28,16 +28,14 @@
 
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    </head>
 
+        <!-- htmx cdn -->
+        <script src="https://unpkg.com/htmx.org@2.0.0" integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw" crossorigin="anonymous"></script>
+    </head>
     <body>
-        <main style="height: 100vh;">
-            {% block content %}{% endblock content %}
-        </main>
-        <aside>
-            <div class="w-75 position-fixed bottom-0 start-50 translate-middle-x">
-                {% include "messages.html" %}
-            </div>
+        {% block content %}{% endblock content %}
+        <aside class="w-75 position-fixed bottom-0 start-50 translate-middle-x">
+            {% include "messages.html" %}
         </aside>
     </body>
 </html>
