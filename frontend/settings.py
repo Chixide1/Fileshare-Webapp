@@ -131,7 +131,8 @@ STATICFILES_DIRS = [
     ]
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
 SASS_PROCESSOR_ENABLED = True
 SASS_PROCESSOR_ROOT = STATIC_ROOT
 
