@@ -3,18 +3,23 @@
   src: url("../fonts/Chillax-Variable.ttf"); }
 
 body {
-  font-family: 'Chillax' !important; }
+  font-family: 'Chillax' !important;
+  font-size: smaller !important; }
 
 .login {
-  padding: 2rem;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  min-height: 100%;
-  background-color: #F9FAFC; }
+  height: 100%;
+  background-color: #F9FAFC;
+  overflow: hidden; }
   .login__container {
-    width: 40%; }
+    flex-shrink: 0;
+    width: 50%;
+    min-width: 50%; }
+  .login__content {
+    margin: 0 auto;
+    width: 50%; }
   .login__intro {
     padding: 10px; }
   .login__title {
@@ -34,5 +39,22 @@ body {
   .login__link {
     text-decoration: none;
     font-weight: 600; }
+  .login__image {
+    flex-shrink: 1;
+    margin: 20px;
+    background-image: url("../images/space.jpg");
+    height: 95%;
+    width: 50%;
+    background-size: cover;
+    background-repeat: repeat; }
+  @media screen and (max-width: 768px) {
+    .login {
+      justify-content: center; }
+    .login__container {
+      width: 80%; }
+    .login__content {
+      width: 90%; }
+    .login__image {
+      display: none; } }
 
 /*# sourceMappingURL=base.css.map */
