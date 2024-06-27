@@ -3,10 +3,12 @@ resource "azuread_application" "fileshareapp-name" {
 }
 
 resource "azuread_service_principal" "fileshareapp-sp" {
+  depends_on = [ azuread_application.fileshareapp-name ]
   client_id = azuread_application.fileshareapp-name.client_id
 }
 
 resource "azuread_service_principal_password" "client_secret" {
+  depends_on = [ azuread_service_principal.fileshareapp-sp ]
   service_principal_id = azuread_service_principal.fileshareapp-sp.object_id
 }
 
