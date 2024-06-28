@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 from django.contrib import messages
+import socket
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if socket.gethostname() == "ChikLaptop":
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = ["chik-fileshare-webapp.azurewebsites.net","127.0.0.1"]
 
