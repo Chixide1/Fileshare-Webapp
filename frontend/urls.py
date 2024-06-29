@@ -29,3 +29,9 @@ urlpatterns = [
 ]
 
 urlpatterns += staticfiles_urlpatterns()
+
+hmtx_views = [
+    path("check-username/", v.check_username, name='check-username')
+]
+
+urlpatterns += hmtx_views
