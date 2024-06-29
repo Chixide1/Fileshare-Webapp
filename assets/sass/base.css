@@ -61,4 +61,7 @@ body {
   color: #adb5bd;
   font-size: smaller; }
 
+.form-group .invalid-feedback {
+  margin-bottom: 0; }
+
 /*# sourceMappingURL=base.css.map */

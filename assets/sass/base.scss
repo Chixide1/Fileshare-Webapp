@@ -101,4 +101,8 @@ body {
         color: $p-clr-2;
         font-size: smaller;
     }
+
+    & .invalid-feedback {
+        margin-bottom: 0;
+    }
 }
