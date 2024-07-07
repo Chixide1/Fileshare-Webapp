@@ -4,6 +4,7 @@ from . import views
 #urlconf
 urlpatterns = [
     path("", views.index, name="index"),
+    path("dashboard/", views.dashboard, name="dashboard"),
     path("upload_files/", views.upload_files, name="upload_files"),
     path("manage_files/", views.manage_files, name="manage_files"),
     path('download_files/<int:file_id>/', views.download_files, name="download_files"),

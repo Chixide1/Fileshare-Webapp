@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 
 # Create your views here.
 def register(request: HttpRequest):
-    if request.htmx:
+    if request.htmx: # type: ignore
         if request.method == "POST":
             form = RegisterForm(request.POST)
             if form.is_valid():

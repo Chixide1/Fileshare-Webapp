@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center justify-content-between pt-3 pb-4 text-white min-vh-100">
+                <h5 class="w-100">Filestore <i class="fa-solid fa-hands-holding-child"></i></h5>
+                <nav class="nav flex-column w-100">
+                    <a href="#" class="nav-link text-secondary pt-3 pb-3 rounded active"><i class="fa-solid fa-house pe-3"></i>Home</a>
+                    <a href="#" class="nav-link text-secondary pt-3 pb-3 rounded"><i class="fa-solid fa-star pe-3"></i>Favourites</a>
+                    <a href="#" class="nav-link text-secondary pt-3 pb-3 rounded"><i class="fa-solid fa-square-share-nodes pe-3"></i>Shared</a>
+                    <a href="#" class="nav-link text-secondary pt-3 pb-3 rounded"><i class="fa-solid fa-trash pe-3"></i>Deleted</a>
+                </nav>
+                <div class="nav-link text-secondary w-100 px-3 pt-3 pb-3 rounded"><i class="fa-solid fa-right-from-bracket pe-3"></i>Logout</div>
+            </div>
+        </div>
+        <div class="col py-3">
+            Content area...
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, Http404, HttpResponseForbidden
+from django.http import HttpRequest, HttpResponse, HttpResponseForbidden, HttpResponsePermanentRedirect, HttpResponseRedirect
 from .utils import upload_file_to_blob, download_blob, delete_blob, generate_sas
 from pathlib import Path
 from django.contrib import messages
@@ -9,11 +9,15 @@ import mimetypes
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
-def index(request):
+def index(request: HttpRequest) -> HttpResponseRedirect | HttpResponsePermanentRedirect:
     return redirect("/login/")
 
 @login_required(login_url="/login/")
-def upload_files(request):
+def dashboard(request: HttpRequest) -> HttpResponse:
+    return render(request, "website/dashboard.html")
+
+@login_required(login_url="/login/")
+def upload_files(request: HttpRequest):
     files = models.File.objects.filter(user=request.user)
     storage_quota = 100000000
 

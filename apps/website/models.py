@@ -12,4 +12,4 @@ class File(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,default=None,null=True)
 
     def __str__(self) -> str:
-        return self.file_name
+        return str(self.file_name)

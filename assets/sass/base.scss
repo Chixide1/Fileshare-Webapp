@@ -1,7 +1,10 @@
+@import "../bootstrap-5.3.3/scss/bootstrap.scss";
+
 $p-clr-1: #212529;
 $p-clr-2: #adb5bd;
 $a-clr-1: #0D6EFD;
 $bg-clr: #F9FAFC;
+$a-clr-2: #583DA1;
 
 @font-face {
     font-family: 'Chillax';
@@ -105,4 +108,9 @@ body {
     & .invalid-feedback {
         margin-bottom: 0;
     }
+}
+
+.active {
+    background-color: $a-clr-2 !important;
+    color: white !important;
 }
