@@ -1,4 +1,5 @@
 # Azure Fileshare Webapp Project V1
+The updated version of this app is in the Cloudstore repository.
 
 ## Summary
 
