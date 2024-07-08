@@ -1,6 +1,6 @@
 {% extends "base.html" %}{% load crispy_forms_tags %}
 
-{% block title %}Login{% endblock title %}
+{% block title %}Create Account{% endblock title %}
 
 {% block nav %}
 <nav class="navbar bg-dark navbar-dark">
@@ -13,12 +13,11 @@
 {% endblock nav %}
 
 {% block content %}
-<div class="container w-75 mt-4">
-    <form method="POST" class="from-group">
+<div class="container mt-4">
+    <form method="POST" class="form-group">
         {% csrf_token %}
         {{form | crispy}}
-        <button class="btn btn-success">Login</button>
-        <a href={% url "create_user" %} class="btn btn-success">Register</a>
+        <button type="submit" class="btn btn-success">Register</button>
     </form>
 </div>
 {% endblock content %}

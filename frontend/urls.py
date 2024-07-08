@@ -17,21 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from apps.users import views as v
+from users import views as v
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("website.urls")),
-    path("register/",v.register, name="register"),
+    path("create_user/",v.create_user, name="create_user"),
     path('login/', auth_views.LoginView.as_view(template_name="users/login.html"), name="login"),
     path('logout/', auth_views.LogoutView.as_view(),name="logout")
 ]
 
 urlpatterns += staticfiles_urlpatterns()
-
-hmtx_views = [
-    path("check-username/", v.check_username, name='check-username')
-]
-
-urlpatterns += hmtx_views
